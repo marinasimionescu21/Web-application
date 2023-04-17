@@ -1,7 +1,6 @@
 package ro.pweb.myspringapi.service;
 
 import org.springframework.stereotype.Service;
-import ro.pweb.myspringapi.dto.UserDto;
 import ro.pweb.myspringapi.entity.User;
 import ro.pweb.myspringapi.repository.UserRepository;
 
@@ -25,6 +24,11 @@ public class UserService implements IUserService {
     public void createUser(User user) {
         validateEmail(user.getEmailAddress());
         userRepository.save(user);
+    }
+
+    @Override
+    public Optional<User> getById(Long id) {
+        return userRepository.findById(id);
     }
 
     @Override

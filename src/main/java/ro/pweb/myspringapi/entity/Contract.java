@@ -12,7 +12,7 @@ public class Contract {
 
     private Integer residentCode;
 
-    private int billCode;
+    private int billId;
 
     @OneToOne(mappedBy = "contract")
     private Resident resident;
@@ -30,7 +30,7 @@ public class Contract {
     public Contract(int id, Integer residentCode, int billCode, Resident resident, User user, Bill bill) {
         this.id = id;
         this.residentCode = residentCode;
-        this.billCode = billCode;
+        this.billId = billCode;
         this.resident = resident;
         this.user = user;
         this.bill = bill;
@@ -53,11 +53,11 @@ public class Contract {
     }
 
     public int getBillCode() {
-        return billCode;
+        return billId;
     }
 
     public void setBillCode(int billCode) {
-        this.billCode = billCode;
+        this.billId = billCode;
     }
 
     public Resident getResident() {

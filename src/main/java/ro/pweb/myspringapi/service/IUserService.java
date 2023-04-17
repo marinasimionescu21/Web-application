@@ -3,6 +3,7 @@ package ro.pweb.myspringapi.service;
 import ro.pweb.myspringapi.entity.User;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface IUserService {
 
@@ -10,5 +11,6 @@ public interface IUserService {
     void createUser(User user);
     void updateUser(Long id, User user);
     void deleteUser(Long id);
+    Optional<User> getById(Long id);
 
 }

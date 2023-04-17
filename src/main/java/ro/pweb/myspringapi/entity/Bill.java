@@ -8,30 +8,30 @@ import java.util.List;
 @Table(name = "bill")
 public class Bill {
     @Id
-    @Column(name = "cod_bill")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int code;
+    @SequenceGenerator(name = "bill_sequence", allocationSize = 1)
+    @GeneratedValue(generator = "bill_sequence", strategy = GenerationType.SEQUENCE)
+    private int id;
 
-    @Column(name = "amount")
     private double amount;
 
-    @OneToMany(mappedBy = "billCode")
+    @OneToMany(mappedBy = "billId")
     private List<Contract> contracts;
 
     public Bill() {
     }
 
-    public Bill(int code, double amount) {
-        this.code = code;
+    public Bill(int id, double amount, List<Contract> contracts) {
+        this.id = id;
         this.amount = amount;
+        this.contracts = contracts;
     }
 
-    public int getCode() {
-        return code;
+    public int getId() {
+        return id;
     }
 
-    public void setCode(int code) {
-        this.code = code;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public double getAmount() {
@@ -40,5 +40,13 @@ public class Bill {
 
     public void setAmount(double amount) {
         this.amount = amount;
+    }
+
+    public List<Contract> getContracts() {
+        return contracts;
+    }
+
+    public void setContracts(List<Contract> contracts) {
+        this.contracts = contracts;
     }
 }
