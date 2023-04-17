@@ -1,6 +1,5 @@
 package ro.pweb.myspringapi.controller;
 
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ro.pweb.myspringapi.exceptions.UserNotFoundException;
 import ro.pweb.myspringapi.service.UserService;
@@ -19,7 +18,7 @@ public class UserController {
         this.userService = userService;
     }
 
-    @GetMapping
+    @RequestMapping(value ="api/v1/users", method = RequestMethod.GET)
     public List<User> getUsers() {
         return userService.getUsers();
     }
@@ -31,7 +30,7 @@ public class UserController {
     }
 
     @PostMapping
-    public void createUser(@RequestBody User user, @RequestHeader("Authorization") String header) {
+    public void createUser(@RequestBody User user) {
         userService.createUser(user);
     }
 

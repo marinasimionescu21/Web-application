@@ -1,12 +1,11 @@
 package ro.pweb.myspringapi.auth;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.boot.autoconfigure.neo4j.Neo4jProperties;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping(path = "/api/vi/auth")
+@RequestMapping(path = "/api/v1/auth")
 @RequiredArgsConstructor
 public class AuthenticationController {
     private final AuthenticationService service;
@@ -14,13 +13,15 @@ public class AuthenticationController {
     public ResponseEntity<AuthenticationResponse> register (
             @RequestBody RegisterRequest request
     ) {
-        return ResponseEntity.ok(service.register(request));
+        AuthenticationResponse register = service.register(request);
+        return ResponseEntity.ok(register);
     }
 
     @PostMapping("/authentication")
-    public ResponseEntity<AuthenticationResponse> register (
+    public ResponseEntity<AuthenticationResponse> authentication (
             @RequestBody AuthenticationRequest request
     ) {
-        return ResponseEntity.ok(service.authenticate(request));
+        AuthenticationResponse authenticate = service.authenticate(request);
+        return ResponseEntity.ok(authenticate);
     }
 }

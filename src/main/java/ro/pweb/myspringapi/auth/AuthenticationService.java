@@ -6,9 +6,10 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import ro.pweb.myspringapi.config.JwtService;
-import ro.pweb.myspringapi.entity.Role;
 import ro.pweb.myspringapi.entity.User;
 import ro.pweb.myspringapi.repository.UserRepository;
+
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -20,16 +21,22 @@ public class AuthenticationService {
 
     public AuthenticationResponse register(RegisterRequest request) {
         var user = User.builder()
-                .firstName(request.getFirstname())
-                .lastName(request.getLastname())
                 .emailAddress(request.getEmail())
                 .password(passwordEncoder.encode(request.getPassword()))
-                .role(Role.USER)
+                .role("User")
                 .build();
 
         repository.save(user);
         var jwtToken = jwtService.generateToken(user);
         return AuthenticationResponse.builder().token(jwtToken).build();
+//        Optional<User> userEx = this.repository.getUserByEmailAddress(request.getEmail());
+//        if(userEx.isPresent()) {
+//            throw new RuntimeException();
+//        } else {
+//            User savedUser = repository.save(user);
+//            String jwtToken = this.jwtService.generateToken(savedUser);
+//            return AuthenticationResponse.builder().token(jwtToken).build();
+//        }
     }
 
     public AuthenticationResponse authenticate(AuthenticationRequest request) {
