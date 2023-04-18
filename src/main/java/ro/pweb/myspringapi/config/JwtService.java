@@ -33,15 +33,7 @@ public class JwtService {
     }
 
     public String generateToken(Map<String, Object> extraClaims, UserDetails userDetails) {
-        Map<String, Object> claims = new HashMap<>();
-        Collection<? extends GrantedAuthority> authorities = userDetails.getAuthorities();
-        List<String> roles = new ArrayList<>();
-        for (GrantedAuthority authority: authorities) {
-            roles.add(authority.getAuthority());
-        }
-        claims.put("roles", roles.get(0));
-        return Jwts.builder()
-                .setClaims(claims)
+        return Jwts.builder().setClaims(extraClaims)
                 .setSubject(userDetails.getUsername())
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 24))

@@ -1,5 +1,7 @@
 package ro.pweb.myspringapi.controller;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ro.pweb.myspringapi.exceptions.UserNotFoundException;
 import ro.pweb.myspringapi.service.UserService;
@@ -12,35 +14,47 @@ import java.util.Optional;
 @RequestMapping(path = "api/v1/users")
 public class UserController {
 
-    private final UserService userService;
+    private UserService userService;
 
     public UserController(UserService userService) {
         this.userService = userService;
     }
 
-    @RequestMapping(value ="api/v1/users", method = RequestMethod.GET)
-    public List<User> getUsers() {
-        return userService.getUsers();
+    @GetMapping("/all")
+    public ResponseEntity<List<User>> getUsers() {
+        List<User> users = userService.getUsers();
+        return ResponseEntity.ok().body(users);
     }
 
-    @RequestMapping(value ="api/v1/users/id", method = RequestMethod.GET)
+    @GetMapping(path = "{id}")
     public Optional<User> getUserById(@PathVariable Long id) {
-        return Optional.ofNullable(userService.getById(id)
-                .orElseThrow(() -> new UserNotFoundException(id)));
+        Optional<User> user = userService.getById(id);
+        return ResponseEntity.ok().body(user).getBody();
     }
 
-    @PostMapping
-    public void createUser(@RequestBody User user) {
-        userService.createUser(user);
+    @PostMapping("/create")
+    public HttpStatus createUser(@RequestBody User user) throws Exception {
+        try {
+            userService.createUser(user);
+            return HttpStatus.CREATED;
+        } catch (Exception e) {
+            throw new Exception();
+        }
     }
 
     @PutMapping(path = "{id}")
-    public void updateUser(@PathVariable Long id, @RequestBody User user) {
-        userService.updateUser(id, user);
+    public User updateUser(@PathVariable Long id, @RequestBody User user) {
+        User newUser = userService.updateUser(id, user);
+        return ResponseEntity.ok().body(newUser).getBody();
     }
 
     @DeleteMapping(path = "{id}")
-    public void deleteUser(@PathVariable Long id) {
-        userService.deleteUser(id);
+    public HttpStatus deleteUser(@PathVariable Long id) {
+        try {
+            userService.deleteUser(id);
+            return HttpStatus.OK;
+        } catch (Exception e) {
+            throw new UserNotFoundException(id);
+        }
     }
 }

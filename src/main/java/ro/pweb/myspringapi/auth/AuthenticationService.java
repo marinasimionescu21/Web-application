@@ -23,20 +23,12 @@ public class AuthenticationService {
         var user = User.builder()
                 .emailAddress(request.getEmail())
                 .password(passwordEncoder.encode(request.getPassword()))
-                .role("User")
+                .role(request.getRole())
                 .build();
 
         repository.save(user);
         var jwtToken = jwtService.generateToken(user);
         return AuthenticationResponse.builder().token(jwtToken).build();
-//        Optional<User> userEx = this.repository.getUserByEmailAddress(request.getEmail());
-//        if(userEx.isPresent()) {
-//            throw new RuntimeException();
-//        } else {
-//            User savedUser = repository.save(user);
-//            String jwtToken = this.jwtService.generateToken(savedUser);
-//            return AuthenticationResponse.builder().token(jwtToken).build();
-//        }
     }
 
     public AuthenticationResponse authenticate(AuthenticationRequest request) {

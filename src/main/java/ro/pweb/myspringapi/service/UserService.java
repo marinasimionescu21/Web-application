@@ -4,12 +4,12 @@ import org.springframework.stereotype.Service;
 import ro.pweb.myspringapi.entity.User;
 import ro.pweb.myspringapi.repository.UserRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 @Service
 public class UserService implements IUserService {
-
-    private final UserRepository userRepository;
+    private UserRepository userRepository;
 
     public UserService(UserRepository userRepository) {
         this.userRepository = userRepository;
@@ -26,15 +26,20 @@ public class UserService implements IUserService {
         userRepository.save(user);
     }
 
+    public User save(User newUser) {
+        return userRepository.save(newUser);
+    }
+
     @Override
     public Optional<User> getById(Long id) {
         return userRepository.findById(id);
     }
 
     @Override
-    public void updateUser(Long id, User user) {
+    public User updateUser(Long id, User user) {
         User userToUpdate = userRepository.findById(id).orElseThrow(
                 () -> new IllegalStateException(String.format("User with id %s doesn't exist", id)));
+
         validateEmail(user.getEmailAddress());
 
         userToUpdate.setFirstName(user.getFirstName());
@@ -43,13 +48,14 @@ public class UserService implements IUserService {
         userToUpdate.setAge(user.getAge());
         userToUpdate.setEmailAddress(user.getEmailAddress());
         userToUpdate.setRole(user.getRole());
+        userToUpdate.setContract(user.getContract());
 
-        userRepository.save(userToUpdate);
+        return userRepository.save(userToUpdate);
     }
 
     private void validateEmail(String email) {
         Optional<User> userOptional = userRepository.getUserByEmailAddress(email);
-        if(userOptional.isPresent()) {
+        if(userOptional.isPresent() && !email.isEmpty()) {
             throw new IllegalStateException(String.format("Email address %s already exists", email));
         }
     }
