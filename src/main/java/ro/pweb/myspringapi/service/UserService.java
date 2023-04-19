@@ -26,10 +26,6 @@ public class UserService implements IUserService {
         userRepository.save(user);
     }
 
-    public User save(User newUser) {
-        return userRepository.save(newUser);
-    }
-
     @Override
     public Optional<User> getById(Long id) {
         return userRepository.findById(id);

@@ -8,7 +8,8 @@ import java.util.Optional;
 public interface IBillService {
     List<Bill> getBills();
     void createBill(Bill bill);
-    void updateBill(int code, Bill bill);
+    Bill updateBill(int code, Bill bill);
     void deleteBill(int code);
-    Optional<Bill> getById(int code);
+    Optional<Bill> getById(int id);
+
 }

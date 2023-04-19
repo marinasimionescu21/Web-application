@@ -15,10 +15,10 @@ public class BillService implements IBillService{
         this.billRepository = billRepository;
     }
 
-    private void validateId(int code) {
-        Optional<Bill> billOptional = billRepository.getBillById(code);
+    private void validateId(int id) {
+        Optional<Bill> billOptional = billRepository.getBillById(id);
         if(billOptional.isPresent()) {
-            throw new IllegalStateException(String.format("Id %s already exists", code));
+            throw new IllegalStateException(String.format("Id %s already exists", id));
         }
     }
 
@@ -35,28 +35,29 @@ public class BillService implements IBillService{
     }
 
     @Override
-    public void updateBill(int code, Bill bill) {
-        Bill billToUpdate = billRepository.findById(code).orElseThrow(
-                () -> new BillNotFoundException(code));
+    public Bill updateBill(int id, Bill bill) {
+        Bill billToUpdate = billRepository.findById(id).orElseThrow(
+                () -> new BillNotFoundException(id));
         validateId(bill.getId());
 
         billToUpdate.setAmount(bill.getAmount());
         billToUpdate.setContracts(bill.getContracts());
 
-        billRepository.save(billToUpdate);
+        return billRepository.save(billToUpdate);
     }
 
     @Override
-    public void deleteBill(int code) {
-        boolean billExists = billRepository.existsById(code);
+    public void deleteBill(int id) {
+        boolean billExists = billRepository.existsById(id);
         if(!billExists) {
-            throw new BillNotFoundException(code);
+            throw new BillNotFoundException(id);
         }
-        billRepository.deleteById(code);
+        billRepository.deleteById(id);
     }
 
     @Override
-    public Optional<Bill> getById(int code) {
-        return billRepository.findById(code);
+    public Optional<Bill> getById(int id) {
+        return billRepository.getBillById(id);
     }
+
 }
