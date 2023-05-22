@@ -5,6 +5,8 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import ro.pweb.myspringapi.dto.UserDTO;
 import ro.pweb.myspringapi.exceptions.UserNotFoundException;
@@ -25,7 +27,7 @@ public class UserController {
 
     public UserController(UserService userService) {
         this.userService = userService;
-    }
+}
 
     @GetMapping("/all")
     public ResponseEntity<List<UserDTO>> getUsers() {
@@ -41,7 +43,6 @@ public class UserController {
         return ResponseEntity.ok().body(userDTO);
     }
 
-    @RolesAllowed("Admin")
     @PostMapping("/create")
     public HttpStatus createUser(@RequestBody User user) throws Exception {
         try {

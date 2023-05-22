@@ -36,14 +36,25 @@ public class UserService implements IUserService {
         User userToUpdate = userRepository.findById(id).orElseThrow(
                 () -> new IllegalStateException(String.format("User with id %s doesn't exist", id)));
 
-        validateEmail(user.getEmailAddress());
-
-        userToUpdate.setFirstName(user.getFirstName());
-        userToUpdate.setLastName(user.getLastName());
-        userToUpdate.setAddress(user.getAddress());
-        userToUpdate.setAge(user.getAge());
-        userToUpdate.setEmailAddress(user.getEmailAddress());
-        userToUpdate.setRole(user.getRole());
+        //validateEmail(user.getEmailAddress());
+        if (!user.getFirstName().isEmpty()) {
+            userToUpdate.setFirstName(user.getFirstName());
+        }
+        if(!user.getLastName().isEmpty()) {
+            userToUpdate.setLastName(user.getLastName());
+        }
+        if(!user.getAddress().isEmpty()) {
+            userToUpdate.setAddress(user.getAddress());
+        }
+        if(user.getAge() != 0) {
+            userToUpdate.setAge(user.getAge());
+        }
+        if(!user.getEmailAddress().isEmpty()) {
+            userToUpdate.setEmailAddress(user.getEmailAddress());
+        }
+        if(!user.getRole().isEmpty()) {
+            userToUpdate.setRole(user.getRole());
+        }
         userToUpdate.setContract(user.getContract());
 
         return userRepository.save(userToUpdate);

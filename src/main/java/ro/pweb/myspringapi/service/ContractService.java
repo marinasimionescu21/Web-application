@@ -1,5 +1,6 @@
 package ro.pweb.myspringapi.service;
 
+import org.springframework.stereotype.Service;
 import ro.pweb.myspringapi.entity.Contract;
 import ro.pweb.myspringapi.entity.User;
 import ro.pweb.myspringapi.repository.ContractRepository;
@@ -7,6 +8,7 @@ import ro.pweb.myspringapi.repository.ContractRepository;
 import java.util.List;
 import java.util.Optional;
 
+@Service
 public class ContractService implements IContractService{
     private final ContractRepository contractRepository;
     public ContractService(ContractRepository contractRepository) {

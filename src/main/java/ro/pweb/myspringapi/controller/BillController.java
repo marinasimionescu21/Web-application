@@ -44,14 +44,14 @@ public class BillController {
     }
 
     @PutMapping(path = "{id}")
-    public Bill updateBill(@PathVariable int id, @RequestBody Bill bill) {
+    public Bill updateBill(@PathVariable int id, @RequestBody Bill bill) throws BillNotFoundException{
         Bill newBill = billService.updateBill(id, bill);
         return ResponseEntity.ok().body(newBill).getBody();
     }
 
     @RolesAllowed("Admin")
     @DeleteMapping(path = "{id}")
-    public HttpStatus deleteBill(@PathVariable int id) {
+    public HttpStatus deleteBill(@PathVariable int id) throws BillNotFoundException{
         try {
             billService.deleteBill(Math.toIntExact(id));
             return HttpStatus.OK;
@@ -61,7 +61,7 @@ public class BillController {
     }
 
     @GetMapping(path = "{id}")
-    public ResponseEntity<BillDTO> getBillById(@PathVariable int id) {
+    public ResponseEntity<BillDTO> getBillById(@PathVariable int id) throws BillNotFoundException{
         Optional<Bill> bill = billService.getById(id);
         BillDTO billDTO = modelMapper.map(bill, BillDTO.class);
         return ResponseEntity.ok().body(billDTO);
