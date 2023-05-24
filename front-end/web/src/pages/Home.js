@@ -47,7 +47,7 @@
                                         <Link className="btn btn-primary mx-2"
                                         to={`/viewuser/${user.id}`}>View</Link>
                                         <Link className="btn btn-outline-primary mx-2"
-                                        to={`/edituser/$(user.id)`}>Edit</Link>
+                                        to={`/edituser/${user.id}`}>Edit</Link>
                                         <button
                                             className="btn btn-danger mx-2"
                                             onClick={() => deleteUser(user.id)}>

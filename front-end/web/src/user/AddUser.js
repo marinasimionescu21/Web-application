@@ -24,7 +24,7 @@ export default function AddUser() {
 
     const onSubmit = async e => {
         e.preventDefault();
-        await axios.post('http://localhost:8080/api/v1/users/create', user);
+        await axios.post('api/v1/users/create', user);
         navigate('/');
     }
 
