@@ -1,0 +1,95 @@
+/* InitialPage.css */
+
+.initial-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background-image: url('https://images.pexels.com/photos/339620/pexels-photo-339620.jpeg'); /* Replace with the URL of your chosen image */
+    background-size: cover; /* Ensures the image covers the whole background */
+    background-position: center center; /* Centers the image */
+    background-attachment: fixed; /* Keeps the background fixed during scrolling */
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    text-align: center;
+    color: #333;
+    padding: 0 20px;
+    box-sizing: border-box;
+}
+
+.initial-page-header {
+    margin-bottom: 20px;
+    background-color: rgba(255, 255, 255, 0.7); /* Semi-transparent background to improve readability */
+    padding: 10px;
+    border-radius: 8px;
+}
+
+.initial-page-header h1 {
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+    color: #2c3e50;
+    font-weight: bold;
+}
+
+.initial-page-header p {
+    font-size: 1.2rem;
+    color: #7f8c8d;
+    max-width: 80%;
+    margin: 0 auto;
+}
+
+.button-container {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.button-container button {
+    padding: 12px 24px;
+    font-size: 1rem;
+    color: #fff;
+    background-color: #3498db;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    min-width: 150px;
+}
+
+.button-container button:hover {
+    background-color: #2980b9;
+    transform: scale(1.05);
+}
+
+.button-container button:active {
+    background-color: #1e6a95;
+    transform: scale(0.98);
+}
+
+@media (max-width: 768px) {
+    .initial-page-header h1 {
+        font-size: 2rem;
+    }
+
+    .initial-page-header p {
+        font-size: 1rem;
+    }
+
+    .button-container button {
+        min-width: 120px;
+        font-size: 0.9rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .initial-page-header h1 {
+        font-size: 1.8rem;
+    }
+
+    .button-container button {
+        min-width: 100px;
+        font-size: 0.8rem;
+        padding: 10px 20px;
+    }
+}
