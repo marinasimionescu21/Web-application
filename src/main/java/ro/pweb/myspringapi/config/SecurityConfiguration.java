@@ -1,9 +1,5 @@
 package ro.pweb.myspringapi.config;
 
-<<<<<<< HEAD
-=======
-import jakarta.servlet.Filter;
->>>>>>> 7d22ca3cfb891676cf031ad47243c336d8db5674
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -13,13 +9,10 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-<<<<<<< HEAD
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 
-=======
->>>>>>> 7d22ca3cfb891676cf031ad47243c336d8db5674
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
@@ -34,7 +27,6 @@ public class SecurityConfiguration {
                 .csrf()
                 .disable()
                 .authorizeHttpRequests()
-<<<<<<< HEAD
                 .requestMatchers("/api/v1/demo-controller/").permitAll()
                 .requestMatchers("/api/v1/auth/**").permitAll() // Allow unauthenticated access to auth routes
                 .requestMatchers("/api/v1/users/**").permitAll() // Allow unauthenticated access to user-related routes
@@ -119,27 +111,3 @@ public class SecurityConfiguration {
 //        return new CorsFilter(source);
 //    }
 //}
-=======
-                .requestMatchers("/api/v1/demo-controller/")
-                .permitAll()
-                .requestMatchers("/api/v1/auth/**")
-                .permitAll()
-                .requestMatchers("/api/v1/users/**")
-                .permitAll()
-                .requestMatchers("/api/v1/bills/**")
-                .permitAll()
-                .requestMatchers("/api/v1/contracts/**")
-                .permitAll()
-                .anyRequest()
-                .authenticated()
-                .and()
-                .sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and()
-                .authenticationProvider(authenticationProvider)
-                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
-
-        return http.build();
-    }
-}
->>>>>>> 7d22ca3cfb891676cf031ad47243c336d8db5674

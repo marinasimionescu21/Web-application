@@ -6,10 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-<<<<<<< HEAD
-=======
-import ro.pweb.myspringapi.dto.UserDTO;
->>>>>>> 7d22ca3cfb891676cf031ad47243c336d8db5674
 import ro.pweb.myspringapi.exceptions.UserNotFoundException;
 import ro.pweb.myspringapi.service.UserService;
 import ro.pweb.myspringapi.entity.User;
@@ -32,7 +28,6 @@ public class UserController {
 }
 
     @GetMapping("/all")
-<<<<<<< HEAD
     public ResponseEntity<List<User>> getUsers() {
         return ResponseEntity.ok().body(userService.getUsers()
                 .stream().map(user -> modelMapper.map(user, User.class))
@@ -44,19 +39,6 @@ public class UserController {
         Optional<User> user = userService.getById(id);
         //UserDTO userDTO = modelMapper.map(user, UserDTO.class);
         return ResponseEntity.ok().body(user);
-=======
-    public ResponseEntity<List<UserDTO>> getUsers() {
-        return ResponseEntity.ok().body(userService.getUsers()
-                .stream().map(user -> modelMapper.map(user, UserDTO.class))
-                .collect(Collectors.toList()));
-    }
-
-    @GetMapping(path = "{id}")
-    public ResponseEntity<UserDTO> getUserById(@PathVariable Long id) {
-        Optional<User> user = userService.getById(id);
-        UserDTO userDTO = modelMapper.map(user, UserDTO.class);
-        return ResponseEntity.ok().body(userDTO);
->>>>>>> 7d22ca3cfb891676cf031ad47243c336d8db5674
     }
 
     @PostMapping("/create")

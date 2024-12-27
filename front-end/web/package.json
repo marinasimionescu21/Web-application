@@ -2,11 +2,7 @@
   "name": "web",
   "version": "0.1.0",
   "private": true,
-<<<<<<< HEAD
   "proxy": "http://localhost:8080/",
-=======
-  "proxy": "http://localhost:8080",
->>>>>>> 7d22ca3cfb891676cf031ad47243c336d8db5674
   "dependencies": {
     "@chakra-ui/react": "^2.6.1",
     "@emotion/react": "^11.11.0",
@@ -17,32 +13,19 @@
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
-<<<<<<< HEAD
     "axios": "^1.7.9",
     "bootstrap": "^5.2.3",
     "cors": "^2.8.5",
-=======
-    "axios": "^1.4.0",
-    "bootstrap": "^5.2.3",
->>>>>>> 7d22ca3cfb891676cf031ad47243c336d8db5674
     "framer-motion": "^10.12.14",
     "react": "^18.2.0",
     "react-bootstrap": "^2.7.4",
     "react-dom": "^18.2.0",
-<<<<<<< HEAD
     "react-icons": "^5.4.0",
     "react-router-dom": "^6.11.2",
     "react-scripts": "^5.0.1",
     "use-local-storage-state": "^18.3.3",
     "util": "^0.12.5",
     "utils": "^0.2.2",
-=======
-    "react-router-dom": "^6.11.2",
-    "react-scripts": "5.0.1",
-    "use-local-storage-state": "^18.3.3",
-    "util": "^0.12.5",
-    "utils": "^0.3.1",
->>>>>>> 7d22ca3cfb891676cf031ad47243c336d8db5674
     "web-vitals": "^2.1.4"
   },
   "scripts": {
@@ -68,11 +51,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-<<<<<<< HEAD
   },
   "devDependencies": {
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11"
-=======
->>>>>>> 7d22ca3cfb891676cf031ad47243c336d8db5674
   }
 }

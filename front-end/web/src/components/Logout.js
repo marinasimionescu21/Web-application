@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FaSignOutAlt } from 'react-icons/fa'; // Logout icon
@@ -116,18 +115,3 @@ styleSheet.insertRule(`
 `, styleSheet.cssRules.length);
 
 export default Logout;
-=======
-import { useNavigate} from 'react-router-dom';
-import {setAuthToken} from '../helpers/setAuthToken'
-
-function Logout() {
-    localStorage.removeItem('token');
-    console.log(localStorage.getItem("token"));
-    const navigate = useNavigate();
-    setAuthToken(null);
-    return (<h2>Home page</h2>);  
-    navigate('/');
-}
-
-export default Logout;
->>>>>>> 7d22ca3cfb891676cf031ad47243c336d8db5674

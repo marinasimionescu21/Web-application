@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import React, { useEffect, useState } from "react";
 import "../userfriendly_page/Resident.css"; // Add custom styles
 
@@ -324,12 +323,3 @@ function Resident() {
 }
 
 export default Resident;
-=======
-import React, { useState } from "react";
-
-function Resident() {
-    return (<h2>RESIDENT PAGE</h2>);
-}
-
-export default Resident;
->>>>>>> 7d22ca3cfb891676cf031ad47243c336d8db5674

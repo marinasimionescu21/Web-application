@@ -59,21 +59,4 @@ public class ResidentController {
             throw new UserNotFoundException(id);
         }
     }
-
-    //@RolesAllowed("Admin")
-    @PutMapping(path = "{cnp}")
-    public ResponseEntity<Resident> updateResident(@PathVariable Long cnp, @RequestBody Resident resident) {
-        try {
-            Optional<Resident> existingResident = residentService.getById(cnp);
-            if (existingResident.isEmpty()) {
-                return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                        .body(null); // Employee not found
-            }
-            Resident updatedResident = residentService.updateResident(cnp, resident);
-            return ResponseEntity.ok(updatedResident);
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(null); // Handle other errors
-        }
-    }
 }
