@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+<<<<<<< HEAD
 import { Link } from "react-router-dom";
 
 // URL of the background image
@@ -102,3 +103,11 @@ const styles = {
 };
 
 export default Home;
+=======
+
+function Home() {
+    return (<h2>HOME PAGE</h2>);
+}
+
+export default Home;
+>>>>>>> 7d22ca3cfb891676cf031ad47243c336d8db5674

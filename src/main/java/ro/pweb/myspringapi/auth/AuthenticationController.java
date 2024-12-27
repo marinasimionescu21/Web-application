@@ -4,7 +4,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+<<<<<<< HEAD
 @CrossOrigin(origins = "http://localhost:3000")
+=======
+>>>>>>> 7d22ca3cfb891676cf031ad47243c336d8db5674
 @RestController
 @RequestMapping(path = "/api/v1/auth")
 @RequiredArgsConstructor

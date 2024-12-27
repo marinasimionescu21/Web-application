@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+<<<<<<< HEAD
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { setAuthToken } from '../helpers/setAuthToken';
@@ -108,12 +109,85 @@ function Login() {
             onMouseOver={(e) => e.target.style.backgroundColor = '#0056b3'}
             onMouseOut={(e) => e.target.style.backgroundColor = '#007BFF'}
           />
+=======
+import { useNavigate} from 'react-router-dom';
+import axios from 'axios';
+
+import {setAuthToken} from '../helpers/setAuthToken'
+
+function Login() {
+
+  const [errorMessages, setErrorMessages] = useState({});
+  const [isSubmitted, setIsSubmitted] = useState(false);
+
+  const navigate = useNavigate();
+
+  const errors = {
+    uname: "invalid email_address",
+    pass: "invalid password"
+  };
+
+  const handleSubmit = (event) => {
+    //Prevent page reload
+    event.preventDefault();
+
+    var { email_address, password } = document.forms[0]; 
+
+    axios.post("api/v1/auth/register", 
+    {
+      email_address: event.target.email_address.value,
+      password: event.target.password.value}
+      )
+     .then(response => {
+       //get token from response
+       const token  =  response.data.token;
+
+       console.log(token);
+ 
+       //set JWT token to local
+       localStorage.setItem("token", token);
+ 
+       //set token to axios common header
+       setAuthToken(token);
+
+       navigate('/home');
+
+       window.location.reload(false);
+       
+     });
+
+  };
+
+  // Generate JSX code for error message
+  const renderErrorMessage = (name) =>
+    name === errorMessages.name && (
+      <div className="error">{errorMessages.message}</div>
+    );
+
+  // JSX code for login form
+  const renderForm = (
+    <div className="form">
+      <form onSubmit={handleSubmit}>
+        <div className="input-container">
+          <label>email_address </label>
+          <input type="text" name="email_address" required />
+          {renderErrorMessage("uname")}
+        </div>
+        <div className="input-container">
+          <label>Password </label>
+          <input type="password" name="password" required />
+          {renderErrorMessage("pass")}
+        </div>
+        <div className="button-container">
+          <input type="submit" />
+>>>>>>> 7d22ca3cfb891676cf031ad47243c336d8db5674
         </div>
       </form>
     </div>
   );
 
   return (
+<<<<<<< HEAD
     <div className="app" style={{ 
       fontFamily: "'Arial', sans-serif", 
       padding: '30px',
@@ -139,9 +213,19 @@ function Login() {
           Sign In
         </div>
         {isSubmitted ? <div style={{ color: 'green', textAlign: 'center' }}>User is successfully logged in</div> : renderForm}
+=======
+    <div className="app">
+      <div className="login-form">
+        <div className="title">Sign In</div>
+        {isSubmitted ? <div>User is successfully logged in</div> : renderForm}
+>>>>>>> 7d22ca3cfb891676cf031ad47243c336d8db5674
       </div>
     </div>
   );
 }
 
+<<<<<<< HEAD
 export default Login;
+=======
+export default Login;
+>>>>>>> 7d22ca3cfb891676cf031ad47243c336d8db5674

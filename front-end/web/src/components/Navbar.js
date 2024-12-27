@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { FaHome, FaSignOutAlt, FaBars, FaArrowLeft, FaUserFriends, FaBriefcase } from 'react-icons/fa'; // Updated icons
@@ -62,10 +63,47 @@ export default function Navbar() {
 function CustomLink({ to, children, ...props }) {
   return (
     <li style={styles.link}>
+=======
+import { Link, useMatch, useResolvedPath } from "react-router-dom"
+
+export default function Navbar() {
+
+  const auth = localStorage.getItem("token");
+  console.log(auth);
+
+  return (
+    auth? 
+    <nav className="nav">
+      <ul>
+        <CustomLink to="/home">Home</CustomLink>
+        <CustomLink to="/resident">Resident</CustomLink>
+        <CustomLink to="/user">User</CustomLink>
+        <CustomLink to="/logout">Logout</CustomLink>
+      </ul>
+    </nav>
+    :
+    <nav className="nav">
+    <ul>
+      <CustomLink to="/login">Login</CustomLink>
+      <CustomLink to="/register">Register</CustomLink>
+    </ul>
+  </nav>
+
+  )
+}
+
+function CustomLink({ to, children, ...props }) {
+  const resolvedPath = useResolvedPath(to)
+  const isActive = useMatch({ path: resolvedPath.pathname, end: true })
+
+  return (
+    <li className={isActive ? "active" : ""}>
+>>>>>>> 7d22ca3cfb891676cf031ad47243c336d8db5674
       <Link to={to} {...props}>
         {children}
       </Link>
     </li>
+<<<<<<< HEAD
   );
 }
 
@@ -121,3 +159,7 @@ const styles = {
     cursor: "pointer",
   },
 };
+=======
+  )
+}
+>>>>>>> 7d22ca3cfb891676cf031ad47243c336d8db5674
