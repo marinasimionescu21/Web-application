@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ro.pweb.myspringapi.dto.ResidentDTO;
+import ro.pweb.myspringapi.entity.Employee;
 import ro.pweb.myspringapi.entity.Resident;
 import ro.pweb.myspringapi.exceptions.UserNotFoundException;
 import ro.pweb.myspringapi.service.ResidentService;
@@ -41,22 +42,49 @@ public class ResidentController {
     }
 
     @PostMapping("/create")
-    public HttpStatus createUser(@RequestBody Resident resident) throws Exception {
+    public ResponseEntity<String> createUser(@RequestBody Resident resident) {
         try {
             residentService.createResident(resident);
-            return HttpStatus.CREATED;
+            return ResponseEntity.status(HttpStatus.CREATED).body("Resident created successfully");
         } catch (Exception e) {
-            throw new Exception();
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
+    }
+
+    //@RolesAllowed("Admin")
+    @PutMapping(path = "{cnp}")
+    public ResponseEntity<Resident> updateResident(@PathVariable Long cnp, @RequestBody Resident resident) {
+        try {
+            Optional<Resident> existingResident = residentService.getById(cnp);
+            if (existingResident.isEmpty()) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                        .body(null); // Employee not found
+            }
+            Resident updatedResident = residentService.updateResident(cnp, resident);
+            return ResponseEntity.ok(updatedResident);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(null); // Handle other errors
         }
     }
 
     @DeleteMapping(path = "{id}")
-    public HttpStatus deleteUser(@PathVariable Long id) {
+    public ResponseEntity<String> deleteUser(@PathVariable Long id) {
         try {
             residentService.deleteResident(id);
-            return HttpStatus.OK;
+            return ResponseEntity.status(HttpStatus.OK).body("Resident deleted successfully and room's free beds updated.");
         } catch (Exception e) {
-            throw new UserNotFoundException(id);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        }
+    }
+
+    @PutMapping("/assign/{residentId}/toRoom/{roomId}")
+    public ResponseEntity<String> assignResidentToRoom(@PathVariable Long residentId, @PathVariable Long roomId) {
+        try {
+            residentService.assignResidentToRoom(residentId, roomId);
+            return ResponseEntity.status(HttpStatus.OK).body("Resident successfully assigned to room.");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error assigning resident to room.");
         }
     }
 }

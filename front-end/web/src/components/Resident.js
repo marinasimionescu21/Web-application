@@ -1,325 +1,214 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import "../userfriendly_page/Resident.css"; // Add custom styles
 
 function Resident() {
-    const [residents, setResidents] = useState([]);  // State to store residents data
-    const [loading, setLoading] = useState(true);  // State to track loading state
-    const [error, setError] = useState(null); // State to track error if any
+    const [residents, setResidents] = useState([]);
     const [newResident, setNewResident] = useState({
-        firstName: "",
-        lastName: "",
-        age: "",
-        medical_history: "",
-        cnp: "",
-        id_room: "",
-        id_plan: "",
-        admission_date: "", // New field
-        birth_date: "", // New field
-    }); // State to manage new resident form
-    const [residentToEdit, setResidentToEdit] = useState(null); // State for editing a resident
-    const [isFormVisible, setIsFormVisible] = useState(false);  // State to toggle form visibility
-
-    // Fetch residents when component mounts
-    useEffect(() => {
-        fetch("http://localhost:8080/api/v1/residents/all")
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error("Failed to fetch residents data");
-                }
-                return response.json();
-            })
-            .then(data => {
-                setResidents(data);  // Set the residents data
-                setLoading(false);  // Set loading to false once data is fetched
-            })
-            .catch(err => {
-                setError(err.message);  // Set error if something goes wrong
-                setLoading(false);  // Set loading to false even if there is an error
-            });
-    }, []); // Empty dependency array ensures this runs only once, when the component mounts
-
-    // Handle form input changes
-    const handleInputChange = (e) => {
-        const { name, value } = e.target;
-        setNewResident(prevState => ({
-            ...prevState,
-            [name]: value,
-        }));
-    };
-
-    // Handle form submission (Add or Update)
-    const handleSubmit = (e) => {
-        e.preventDefault();  // Prevent the form from refreshing the page
-
-        // Perform validation
-        const { firstName, lastName, age, medical_history, cnp, id_room, id_plan, admission_date, birth_date } = newResident;
-        if (!firstName || !lastName || !age || !medical_history || !cnp || !id_room || !id_plan || !admission_date || !birth_date) {
-            alert("All fields are required");
-            return;
-        }
-
-        // Prepare the data to send
-        const residentData = {
-            firstName,
-            lastName,
-            age,
-            medical_history,
-            cnp,
-            id_room: Number(id_room),  // Ensure numeric conversion for id_room
-            id_plan: Number(id_plan),  // Ensure numeric conversion for id_plan
-            admission_date,
-            birth_date,
+        firstName: '',
+        lastName: '',
+        age: '',
+        medical_history: '',
+        cnp: '',
+        id_room: '',
+        id_plan: '',
+        admission_date: '',
+        birth_date: '',
+    })
+    ;
+        const [residentToEdit, setResidentToEdit] = useState(null);
+        const [message, setMessage] = useState('');
+        const [showModal, setShowModal] = useState(false);
+        const [showEditModal, setShowEditModal] = useState(false);
+    
+        useEffect(() => {
+            fetchResidents();
+        }, []);
+    
+        const fetchResidents = async () => {
+            try {
+                const response = await axios.get('http://localhost:8080/api/v1/residents/all');
+                setResidents(response.data);
+            } catch (error) {
+                console.error('Error fetching residents:', error);
+                setMessage('Failed to load residents');
+            }
         };
-
-        // If residentToEdit is not null, it's an update operation
-        if (residentToEdit) {
-            fetch(`http://localhost:8080/api/v1/residents/update/${residentToEdit.id}`, {
-                method: "PUT",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify(residentData),
-            })
-                .then((response) => {
-                    if (!response.ok) {
-                        throw new Error("Failed to update resident");
-                    }
-                    return response.json();
-                })
-                .then((data) => {
-                    // Update the local residents list with the updated data
-                    setResidents(prevResidents =>
-                        prevResidents.map(resident =>
-                            resident.id === data.id ? { ...resident, ...residentData } : resident
-                        )
-                    );
-                    setResidentToEdit(null); // Reset editing state
-                    setNewResident({}); // Clear the form
-                    setIsFormVisible(false); // Hide the form
-                })
-                .catch((err) => {
-                    setError("Failed to update resident: " + err.message);  // Handle error
+    
+        const handleChange = (e) => {
+            const { name, value } = e.target;
+            if (showEditModal) {
+                setResidentToEdit({ ...residentToEdit, [name]: value });
+            } else {
+                setNewResident({ ...newResident, [name]: value });
+            }
+        };
+    
+        const handleSubmit = async (e) => {
+            e.preventDefault();
+            if (!newResident.firstName || !newResident.lastName || !newResident.cnp) {
+                setMessage('Please fill out all required fields');
+                return;
+            }
+    
+            try {
+                await axios.post(`http://localhost:8080/api/v1/residents/create`, newResident);
+                setMessage('Resident created successfully!');
+                setNewResident({
+                    firstName: '',
+                    lastName: '',
+                    age: '',
+                    medical_history: '',
+                    cnp: '',
+                    id_room: '',
+                    id_plan: '',
+                    admission_date: '',
+                    birth_date: '',
                 });
-        } else {
-            // Optimistically update the table by adding the new resident directly
-            const updatedResidents = [...residents, { ...residentData, id: Date.now() }]; // Temporary ID for the new resident
-            setResidents(updatedResidents);
-
-            // Send POST request to backend
-            fetch("http://localhost:8080/api/v1/residents/create", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify(residentData),
-            })
-                .then((response) => {
-                    if (!response.ok) {
-                        throw new Error("Failed to add resident");
-                    }
-                    return response.json();  // Parse response to JSON
-                })
-                .then((data) => {
-                    // Once the resident is successfully added, replace the temporary ID with the real ID from the server
-                    setResidents(prevResidents =>
-                        prevResidents.map(resident =>
-                            resident.id === undefined ? { ...resident, id: data.id } : resident
-                        )
-                    );
-                    setNewResident({}); // Reset form fields
-                    setIsFormVisible(false);  // Hide form after submission
-                })
-                .catch((err) => {
-                    setError("Failed to add resident: " + err.message);  // Handle error
-                });
-        }
-    };
-
-    // Handle delete functionality
-    const handleDelete = (id) => {
-        // Optimistically remove the resident from the UI
-        const updatedResidents = residents.filter(resident => resident.id !== id);
-        setResidents(updatedResidents);
-
-        // Send DELETE request to backend
-        fetch(`http://localhost:8080/api/v1/residents/delete/${id}`, {
-            method: "DELETE",
-        })
-            .then((response) => {
-                if (!response.ok) {
-                    throw new Error("Failed to delete resident");
+                fetchResidents();
+                setShowModal(false);
+            } catch (error) {
+                console.error('Error creating resident:', error);
+                setMessage('Error creating resident');
+            }
+        };
+    
+        const handleEditSubmit = async (e) => {
+            e.preventDefault();
+            if (!residentToEdit.cnp) {
+                setMessage('Invalid resident CNP');
+                return;
+            }
+    
+            try {
+                await axios.put(`http://localhost:8080/api/v1/residents/${residentToEdit.cnp}`, residentToEdit);
+                setMessage('Resident updated successfully!');
+                fetchResidents();
+                setShowEditModal(false);
+            } catch (error) {
+                console.error('Error updating resident:', error);
+                setMessage('Error updating resident');
+            }
+        };
+    
+        const handleDelete = async (cnp) => {
+            const confirmDelete = window.confirm('Are you sure you want to delete this resident?');
+            if (confirmDelete) {
+                try {
+                    await axios.delete(`http://localhost:8080/api/v1/residents/${cnp}`);
+                    setMessage('Resident deleted successfully!');
+                    fetchResidents();
+                } catch (error) {
+                    console.error('Error deleting resident:', error);
+                    setMessage('Error deleting resident');
                 }
-            })
-            .catch((err) => {
-                // If the delete fails, add the resident back to the list
-                setResidents(residents);
-                setError("Failed to delete resident: " + err.message);  // Handle error
-            });
-    };
-
-    // Handle edit functionality
-    const handleEdit = (resident) => {
-        setResidentToEdit(resident);
-        setNewResident(resident); // Pre-fill form with current resident data
-        setIsFormVisible(true); // Show the form
-    };
-
-    // Render loading, error, or the table of residents
-    if (loading) {
-        return <div>Loading...</div>;
-    }
-
-    if (error) {
-        return <div>Error: {error}</div>;
-    }
-
-    return (
-        <div className="resident-page">
-            <h2 className="page-title">Resident Management</h2>
-
-            {/* Button to toggle the form */}
-            <button onClick={() => setIsFormVisible(prev => !prev)}>
-                {isFormVisible ? (residentToEdit ? "Edit Resident" : "Hide Form") : "Add New Resident"}
-            </button>
-
-            {/* Add/Edit Resident Form */}
-            {isFormVisible && (
-                <form onSubmit={handleSubmit}>
-                    <div>
-                        <label>First Name:</label>
-                        <input
-                            type="text"
-                            name="firstName"
-                            value={newResident.firstName || ""}
-                            onChange={handleInputChange}
-                            required
-                        />
+            }
+        };
+    
+        const toggleModal = () => setShowModal(!showModal);
+        const toggleEditModal = () => setShowEditModal(!showEditModal);
+    
+        const startEditResident = (resident) => {
+            setResidentToEdit(resident);
+            setShowEditModal(true);
+        };
+    
+        return (
+            <div className="resident-page">
+                <h2>Resident Management</h2>
+    
+                <div className="resident-list">
+                    {residents.length > 0 ? (
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>First Name</th>
+                                    <th>Last Name</th>
+                                    <th>Age</th>
+                                    <th>Medical History</th>
+                                    <th>CNP</th>
+                                    <th>Room ID</th>
+                                    <th>Care Plan ID</th>
+                                    <th>Admission Date</th>
+                                    <th>Birth Date</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {residents.map((resident) => (
+                                    <tr key={resident.cnp}>
+                                        <td>{resident.firstName}</td>
+                                        <td>{resident.lastName}</td>
+                                        <td>{resident.age}</td>
+                                        <td>{resident.medical_history}</td>
+                                        <td>{resident.cnp}</td>
+                                        <td>{resident.id_room}</td>
+                                        <td>{resident.id_plan}</td>
+                                        <td>{resident.admission_date}</td>
+                                        <td>{resident.birth_date}</td>
+                                        <td>
+                                            <button className="edit-button" onClick={() => startEditResident(resident)}>Edit</button>
+                                            <button className="delete-button" onClick={() => handleDelete(resident.cnp)}>Delete</button>
+                                        </td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    ) : (
+                        <p>No residents found</p>
+                    )}
+                </div>
+    
+                <button className="add-resident-button" onClick={toggleModal}>
+                    Add Resident
+                </button>
+    
+                {showModal && (
+                    <div className="modal-overlay">
+                        <div className="modal">
+                            <h3>Add New Resident</h3>
+                            <form onSubmit={handleSubmit}>
+                                <input name="firstName" value={newResident.firstName} onChange={handleChange} placeholder="First Name" required />
+                                <input name="lastName" value={newResident.lastName} onChange={handleChange} placeholder="Last Name" required />
+                                <input name="age" value={newResident.age} onChange={handleChange} placeholder="Age" type="number" />
+                                <input name="medical_history" value={newResident.medical_history} onChange={handleChange} placeholder="Medical History" />
+                                <input name="cnp" value={newResident.cnp} onChange={handleChange} placeholder="CNP" required />
+                                <input name="id_room" value={newResident.id_room} onChange={handleChange} placeholder="Room ID" type="number" />
+                                <input name="id_plan" value={newResident.id_plan} onChange={handleChange} placeholder="Care Plan ID" type="number" />
+                                <input name="admission_date" value={newResident.admission_date} onChange={handleChange} placeholder="Admission Date" type="date" />
+                                <input name="birth_date" value={newResident.birth_date} onChange={handleChange} placeholder="Birth Date" type="date" />
+                                <button type="submit">Create</button>
+                                <button type="button" onClick={toggleModal}>Cancel</button>
+                            </form>
+                            {message && <p>{message}</p>}
+                        </div>
                     </div>
-                    <div>
-                        <label>Last Name:</label>
-                        <input
-                            type="text"
-                            name="lastName"
-                            value={newResident.lastName || ""}
-                            onChange={handleInputChange}
-                            required
-                        />
+                )}
+    
+                {showEditModal && (
+                    <div className="modal-overlay">
+                        <div className="modal">
+                            <h3>Edit Resident</h3>
+                            <form onSubmit={handleEditSubmit}>
+                                <input name="firstName" value={residentToEdit.firstName} onChange={handleChange} placeholder="First Name" required />
+                                <input name="lastName" value={residentToEdit.lastName} onChange={handleChange} placeholder="Last Name" required />
+                                <input name="age" value={residentToEdit.age} onChange={handleChange} placeholder="Age" type="number" />
+                                <input name="medical_history" value={residentToEdit.medical_history} onChange={handleChange} placeholder="Medical History" />
+                                <input name="cnp" value={residentToEdit.cnp} onChange={handleChange} placeholder="CNP" required readOnly />
+                                <input name="id_room" value={residentToEdit.id_room} onChange={handleChange} placeholder="Room ID" type="number" />
+                                <input name="id_plan" value={residentToEdit.id_plan} onChange={handleChange} placeholder="Care Plan ID" type="number" />
+                                <input name="admission_date" value={residentToEdit.admission_date} onChange={handleChange} placeholder="Admission Date" type="date" />
+                                <input name="birth_date" value={residentToEdit.birth_date} onChange={handleChange} placeholder="Birth Date" type="date" />
+                                <button type="submit">Update</button>
+                                <button type="button" onClick={toggleEditModal}>Cancel</button>
+                            </form>
+                            {message && <p>{message}</p>}
+                        </div>
                     </div>
-                    <div>
-                        <label>Age:</label>
-                        <input
-                            type="number"
-                            name="age"
-                            value={newResident.age || ""}
-                            onChange={handleInputChange}
-                            required
-                        />
-                    </div>
-                    <div>
-                        <label>Medical History:</label>
-                        <input
-                            type="text"
-                            name="medical_history"
-                            value={newResident.medical_history || ""}
-                            onChange={handleInputChange}
-                            required
-                        />
-                    </div>
-                    <div>
-                        <label>CNP:</label>
-                        <input
-                            type="text"
-                            name="cnp"
-                            value={newResident.cnp || ""}
-                            onChange={handleInputChange}
-                            required
-                        />
-                    </div>
-                    <div>
-                        <label>Room ID:</label>
-                        <input
-                            type="number"
-                            name="id_room"
-                            value={newResident.id_room || ""}
-                            onChange={handleInputChange}
-                            required
-                        />
-                    </div>
-                    <div>
-                        <label>Care Plan ID:</label>
-                        <input
-                            type="number"
-                            name="id_plan"
-                            value={newResident.id_plan || ""}
-                            onChange={handleInputChange}
-                            required
-                        />
-                    </div>
-                    <div>
-                        <label>Admission Date:</label>
-                        <input
-                            type="date"
-                            name="admission_date"
-                            value={newResident.admission_date || ""}
-                            onChange={handleInputChange}
-                            required
-                        />
-                    </div>
-                    <div>
-                        <label>Birth Date:</label>
-                        <input
-                            type="date"
-                            name="birth_date"
-                            value={newResident.birth_date || ""}
-                            onChange={handleInputChange}
-                            required
-                        />
-                    </div>
-                    <button type="submit">{residentToEdit ? "Update Resident" : "Add Resident"}</button>
-                </form>
-            )}
-
-            {/* Scrollable Residents Table */}
-            <div className="resident-table-container">
-                <table className="resident-table">
-                    <thead>
-                        <tr>
-                            <th>First Name</th>
-                            <th>Last Name</th>
-                            <th>Age</th>
-                            <th>Medical History</th>
-                            <th>CNP</th>
-                            <th>Room ID</th>
-                            <th>Care Plan ID</th>
-                            <th>Admission Date</th> {/* New column */}
-                            <th>Birth Date</th> {/* New column */}
-                            <th>Action</th> {/* New column for delete */}
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {residents.map((resident) => (
-                            <tr key={resident.id}>
-                                <td>{resident.firstName}</td>
-                                <td>{resident.lastName}</td>
-                                <td>{resident.age}</td>
-                                <td>{resident.medical_history}</td>
-                                <td>{resident.cnp}</td>
-                                <td>{resident.id_room}</td>
-                                <td>{resident.id_plan}</td>
-                                <td>{resident.admission_date}</td>
-                                <td>{resident.birth_date}</td>
-                                <td>
-                                    {/* Edit and Delete Buttons */}
-                                    <button onClick={() => handleEdit(resident)}>Edit</button>
-                                    <button onClick={() => handleDelete(resident.id)}>Delete</button>
-                                </td>
-                            </tr>
-                        ))}
-                    </tbody>
-                </table>
+                )}
             </div>
-        </div>
-    );
-}
+        );
+    }
+    
+    export default Resident;
 
-export default Resident;

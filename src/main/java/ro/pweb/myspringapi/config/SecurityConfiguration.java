@@ -32,6 +32,7 @@ public class SecurityConfiguration {
                 .requestMatchers("/api/v1/users/**").permitAll() // Allow unauthenticated access to user-related routes
                 .requestMatchers("/api/v1/residents/**").permitAll() // Allow unauthenticated access to residents routes
                 .requestMatchers("/api/v1/employees/**").permitAll()
+                .requestMatchers("/api/v1/rooms/**").permitAll()
                 .anyRequest().authenticated() // Any other request requires authentication
                 .and()
                 .sessionManagement()

@@ -16,7 +16,8 @@ import {setAuthToken} from './helpers/setAuthToken'
 import Navbar from './components/Navbar';
 import Logout from './components/Logout';
 import Employee from './components/Employee';
-import ResidentPage from './components/Resident';
+import Resident from './components/Resident';
+import Room from './components/Rooms';
 
 function App() {
   
@@ -36,8 +37,9 @@ function App() {
           <Route exact path='/register' element={<Register/>}>
           </Route>
           <Route exact path='/home' element={<Home/>}> </Route>
-          <Route exact path='/resident' element={<ResidentPage/>}> </Route>
+          <Route exact path='/resident' element={<Resident/>}> </Route>
           <Route exact path='/employee' element={<Employee/>}> </Route>
+          <Route exact path='/room' element={<Room/>}> </Route>
           <Route exact path='/logout' element={<Logout/>}> </Route>
         </Routes>
     </Router>

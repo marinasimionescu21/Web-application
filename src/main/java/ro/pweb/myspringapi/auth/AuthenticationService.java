@@ -9,8 +9,8 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import ro.pweb.myspringapi.config.JwtService;
 import ro.pweb.myspringapi.entity.User;
 import ro.pweb.myspringapi.repository.UserRepository;
+import ro.pweb.myspringapi.exceptions.EmailAlreadyExistsException;
 
-import java.util.Optional;
 
 @CrossOrigin(origins = "http://localhost:3000")
 @Service
@@ -22,6 +22,10 @@ public class AuthenticationService {
     private final AuthenticationManager authenticationManager;
 
     public AuthenticationResponse register(RegisterRequest request) {
+        if (repository.existsByEmailAddress(request.getEmail())) { // Updated method call
+            throw new EmailAlreadyExistsException("Email is already in use");
+        }
+
         var user = User.builder()
                 .emailAddress(request.getEmail())
                 .password(passwordEncoder.encode(request.getPassword()))

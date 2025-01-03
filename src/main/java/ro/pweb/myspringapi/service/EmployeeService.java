@@ -35,7 +35,7 @@ public class EmployeeService implements IEmployeeService {
     public Employee updateEmployee(Long cnp, Employee newEmployeeData) {
         Optional<Employee> existingEmployee = employeeRepository.findByCnp(cnp);
         if (existingEmployee.isEmpty()) {
-            throw new IllegalStateException("User with id " + cnp + " doesn't exist");
+            throw new IllegalStateException("Employee with id " + cnp + " doesn't exist");
         }
 
         Employee employee = existingEmployee.get();

@@ -1,3 +1,4 @@
+
 package ro.pweb.myspringapi.entity;
 
 
@@ -28,4 +29,7 @@ public class Resident {
     private LocalDate admission_date;
     private LocalDate birth_date;
 
+    public void assignToRoom(Room room) {
+        this.id_room = room.getRoomNumber();
+    }
 }

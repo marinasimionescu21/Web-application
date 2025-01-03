@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate, useLocation } from "react-router-dom";
-import { FaHome, FaSignOutAlt, FaBars, FaArrowLeft, FaUserFriends, FaBriefcase } from 'react-icons/fa'; // Updated icons
+import { FaHome, FaSignOutAlt, FaBars, FaArrowLeft, FaUserFriends, FaBriefcase, FaBuilding } from 'react-icons/fa'; // Updated icons
 
 export default function Navbar() {
   const auth = localStorage.getItem("token");
@@ -46,6 +46,9 @@ export default function Navbar() {
             </CustomLink>
             <CustomLink to="/employee">
               <FaBriefcase /> Employees
+            </CustomLink>
+            <CustomLink to="/room">
+              <FaBuilding /> Rooms
             </CustomLink>
             <li>
               <button onClick={handleLogout} className="logout-button" style={styles.logoutButton}>
