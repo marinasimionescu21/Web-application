@@ -1,8 +1,10 @@
 package ro.pweb.myspringapi.service;
 
 import org.springframework.stereotype.Service;
+import ro.pweb.myspringapi.entity.ContactPerson;
 import ro.pweb.myspringapi.entity.Resident;
 import ro.pweb.myspringapi.entity.Room;
+import ro.pweb.myspringapi.repository.ContactPersonRepository;
 import ro.pweb.myspringapi.repository.ResidentRepository;
 import ro.pweb.myspringapi.repository.RoomRepository;
 
@@ -10,15 +12,18 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class ResidentService implements IResidentService{
+public class ResidentService implements IResidentService {
 
-    private ResidentRepository residentRepository;
+    private final ResidentRepository residentRepository;
     private final RoomRepository roomRepository;
+    private final ContactPersonRepository contactPersonRepository;
 
     // Constructor-based dependency injection
-    public ResidentService(ResidentRepository residentRepository, RoomRepository roomRepository) {
+    public ResidentService(ResidentRepository residentRepository, RoomRepository roomRepository,
+                           ContactPersonRepository contactPersonRepository) {
         this.residentRepository = residentRepository;
         this.roomRepository = roomRepository;
+        this.contactPersonRepository = contactPersonRepository;
     }
 
     // Get all residents
@@ -26,29 +31,24 @@ public class ResidentService implements IResidentService{
         return residentRepository.findAll();
     }
 
+    // Create a new resident and assign to room
     public void createResident(Resident resident) throws Exception {
         if (resident.getId_room() != null) {
-            // Retrieve the room by its id
             Room room = roomRepository.findById(String.valueOf(resident.getId_room()))
                     .orElseThrow(() -> new Exception("Room not found"));
 
-            // Decrease the free beds in the room if it's available
             if (room.getFreeBeds() > 0) {
                 room.decreaseFreeBeds();
             } else {
                 throw new Exception("No free beds available in the room");
             }
-
-            // Save the updated room with decreased free beds
             roomRepository.save(room);
-
-            // Assign the resident to the room and set their room ID
             resident.assignToRoom(room);
         }
 
-        // Save the resident after handling the room assignment
         residentRepository.save(resident);
     }
+
     @Override
     public Optional<Resident> getById(Long cnp) {
         return residentRepository.findByCnp(cnp);
@@ -70,12 +70,9 @@ public class ResidentService implements IResidentService{
         resident.setAdmission_date(newResidentData.getAdmission_date());
         resident.setBirth_date(newResidentData.getBirth_date());
         resident.setCnp(newResidentData.getCnp());
-        resident.setId_plan(newResidentData.getId_plan());
-        // Ensure all fields are updated as needed
 
         return residentRepository.save(resident);
     }
-
 
     public void deleteResident(Long cnp) throws Exception {
         Optional<Resident> residentOptional = residentRepository.findByCnp(cnp);
@@ -85,37 +82,43 @@ public class ResidentService implements IResidentService{
 
         Resident resident = residentOptional.get();
 
-        // Retrieve the room that the resident is currently assigned to
         if (resident.getId_room() != null) {
             Room room = roomRepository.findById(String.valueOf(resident.getId_room()))
                     .orElseThrow(() -> new Exception("Room not found"));
 
-            // Increase the free beds in the room
             room.setFreeBeds(room.getFreeBeds() + 1);
-
-            // Save the updated room with the increased free beds
             roomRepository.save(room);
         }
 
-        // Delete the resident
         residentRepository.deleteById(cnp);
     }
 
-
     public void assignResidentToRoom(Long residentId, Long roomId) throws Exception {
-        // Retrieve the resident and room from their respective repositories
         Resident resident = residentRepository.findById(residentId)
                 .orElseThrow(() -> new Exception("Resident not found"));
         Room room = roomRepository.findById(String.valueOf(roomId))
                 .orElseThrow(() -> new Exception("Room not found"));
 
-        // Assign the resident to the room
-        resident.assignToRoom(room);  // This calls room.decreaseFreeBeds()
-
-        // Save the updated resident and room
+        resident.assignToRoom(room);
         residentRepository.save(resident);
         roomRepository.save(room);
     }
 
+    // Add a new contact person for a resident
+    public ContactPerson addContactPerson(Long residentCnp, ContactPerson contactPerson) throws Exception {
+        Resident resident = residentRepository.findByCnp(residentCnp)
+                .orElseThrow(() -> new Exception("Resident not found"));
+        contactPerson.setResident(resident);
+        return contactPersonRepository.save(contactPerson);
+    }
 
+    // Get all contact persons for a resident
+    public List<ContactPerson> getContactPersonsByResident(Long residentCnp) {
+        return contactPersonRepository.findByResidentCnp(residentCnp);
+    }
+
+    // Delete contact person
+    public void deleteContactPerson(Long contactPersonId) {
+        contactPersonRepository.deleteById(contactPersonId);
+    }
 }

@@ -18,10 +18,12 @@ import Logout from './components/Logout';
 import Employee from './components/Employee';
 import Resident from './components/Resident';
 import Room from './components/Rooms';
+import CarePlanForm from './components/CarePlan';
+import AddContactPerson from './components/ContactPerson';
 
 function App() {
   
-  const token = localStorage.getItem("token");
+  const token = localStorage.getItem("token")
   if (token) {
       setAuthToken(token);
   }
@@ -40,6 +42,8 @@ function App() {
           <Route exact path='/resident' element={<Resident/>}> </Route>
           <Route exact path='/employee' element={<Employee/>}> </Route>
           <Route exact path='/room' element={<Room/>}> </Route>
+          <Route exact path='/careplan' element={<CarePlanForm/>}> </Route>
+          <Route exact path='/contactperson' element={<AddContactPerson/>}> </Route>
           <Route exact path='/logout' element={<Logout/>}> </Route>
         </Routes>
     </Router>

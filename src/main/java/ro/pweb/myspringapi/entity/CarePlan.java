@@ -17,6 +17,7 @@ import java.time.LocalDate;
 @Table(name = "care_plan")
 public class CarePlan {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(unique = true, nullable = false)
     private Long id_plan;
 

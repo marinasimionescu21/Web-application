@@ -11,7 +11,6 @@ function Resident() {
         medical_history: '',
         cnp: '',
         id_room: '',
-        id_plan: '',
         admission_date: '',
         birth_date: '',
     })
@@ -61,7 +60,6 @@ function Resident() {
                     medical_history: '',
                     cnp: '',
                     id_room: '',
-                    id_plan: '',
                     admission_date: '',
                     birth_date: '',
                 });
@@ -128,7 +126,6 @@ function Resident() {
                                     <th>Medical History</th>
                                     <th>CNP</th>
                                     <th>Room ID</th>
-                                    <th>Care Plan ID</th>
                                     <th>Admission Date</th>
                                     <th>Birth Date</th>
                                     <th>Actions</th>
@@ -143,7 +140,6 @@ function Resident() {
                                         <td>{resident.medical_history}</td>
                                         <td>{resident.cnp}</td>
                                         <td>{resident.id_room}</td>
-                                        <td>{resident.id_plan}</td>
                                         <td>{resident.admission_date}</td>
                                         <td>{resident.birth_date}</td>
                                         <td>
@@ -174,7 +170,6 @@ function Resident() {
                                 <input name="medical_history" value={newResident.medical_history} onChange={handleChange} placeholder="Medical History" />
                                 <input name="cnp" value={newResident.cnp} onChange={handleChange} placeholder="CNP" required />
                                 <input name="id_room" value={newResident.id_room} onChange={handleChange} placeholder="Room ID" type="number" />
-                                <input name="id_plan" value={newResident.id_plan} onChange={handleChange} placeholder="Care Plan ID" type="number" />
                                 <input name="admission_date" value={newResident.admission_date} onChange={handleChange} placeholder="Admission Date" type="date" />
                                 <input name="birth_date" value={newResident.birth_date} onChange={handleChange} placeholder="Birth Date" type="date" />
                                 <button type="submit">Create</button>
@@ -196,7 +191,6 @@ function Resident() {
                                 <input name="medical_history" value={residentToEdit.medical_history} onChange={handleChange} placeholder="Medical History" />
                                 <input name="cnp" value={residentToEdit.cnp} onChange={handleChange} placeholder="CNP" required readOnly />
                                 <input name="id_room" value={residentToEdit.id_room} onChange={handleChange} placeholder="Room ID" type="number" />
-                                <input name="id_plan" value={residentToEdit.id_plan} onChange={handleChange} placeholder="Care Plan ID" type="number" />
                                 <input name="admission_date" value={residentToEdit.admission_date} onChange={handleChange} placeholder="Admission Date" type="date" />
                                 <input name="birth_date" value={residentToEdit.birth_date} onChange={handleChange} placeholder="Birth Date" type="date" />
                                 <button type="submit">Update</button>

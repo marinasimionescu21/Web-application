@@ -33,6 +33,8 @@ public class SecurityConfiguration {
                 .requestMatchers("/api/v1/residents/**").permitAll() // Allow unauthenticated access to residents routes
                 .requestMatchers("/api/v1/employees/**").permitAll()
                 .requestMatchers("/api/v1/rooms/**").permitAll()
+                .requestMatchers("/api/v1/careplans/**").permitAll()
+                .requestMatchers("/api/v1/contact-persons/**").permitAll()
                 .anyRequest().authenticated() // Any other request requires authentication
                 .and()
                 .sessionManagement()

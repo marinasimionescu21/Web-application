@@ -25,7 +25,6 @@ public class Resident {
     private Integer age;
     private String medical_history;
     private Long id_room;
-    private Long id_plan;
     private LocalDate admission_date;
     private LocalDate birth_date;
 

@@ -1,0 +1,160 @@
+/* General Styles */
+.care-plan-page {
+    padding: 20px;
+    font-family: Arial, sans-serif;
+  }
+  
+  .page-title {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px;
+    border-radius: 5px;
+    text-align: center;
+  }
+  
+  .care-plan-container {
+    margin-top: 20px;
+  }
+  
+  .care-plan-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+  
+  .care-plan-card {
+    padding: 15px;
+    background-color: #f4f4f4;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .toggle-modal-button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .toggle-modal-button:hover {
+    background-color: #45a049;
+  }
+  
+  /* Modal Styles */
+  .modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+  
+  .modal-content {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    width: 50%; /* Adjusted width for the popup */
+    max-width: 600px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+    position: relative;
+  }
+  
+  .close-modal-button {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    background: none;
+    border: none;
+    font-size: 1.2rem;
+    cursor: pointer;
+    color: #333;
+  }
+  
+  .close-modal-button:hover {
+    color: #ff0000;
+  }
+  
+  .form-title {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .modal-content label {
+    display: block;
+    margin-top: 10px;
+    font-weight: bold;
+  }
+  
+  .modal-content input,
+  .modal-content select,
+  .modal-content textarea {
+    width: 100%;
+    margin-top: 5px;
+    margin-bottom: 15px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  /* Adjusting width for objectives and start date input fields */
+  .modal-content textarea,
+  .modal-content input[type="date"] {
+    width: 100%;
+    max-width: 400px; /* Maximum width for text fields */
+    margin-top: 5px;
+    margin-bottom: 15px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box; /* Ensures padding is included in width */
+  }
+  
+  /* Button Styles */
+  .modal-content button {
+    width: auto; /* Make button width auto */
+    padding: 8px 15px; /* Adjust button size */
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 5px; /* Add spacing around buttons */
+  }
+  
+  .modal-content button:hover {
+    background-color: #45a049;
+  }
+  
+  .modal-content .close-modal-button {
+    background-color: #ff4444;
+    padding: 5px 12px;
+    font-size: 14px;
+    margin: 5px;
+    cursor: pointer;
+  }
+  
+  .modal-content .close-modal-button:hover {
+    background-color: #ff2222;
+  }
+  
+  /* Adjustments for form fields */
+  @media screen and (max-width: 768px) {
+    .modal-content {
+      width: 80%; /* Ensure the modal is responsive */
+    }
+    
+    .modal-content input,
+    .modal-content select,
+    .modal-content textarea {
+      width: 100%; /* Ensure form fields are responsive */
+    }
+  }
+  

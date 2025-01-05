@@ -1,0 +1,123 @@
+/* src/App.css */
+.contact-form-container {
+    font-family: Arial, sans-serif;
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+  }
+  
+  h2 {
+    text-align: center;
+    color: #333;
+  }
+  
+  .error-message {
+    background-color: #f8d7da;
+    color: #721c24;
+    padding: 10px;
+    border-radius: 4px;
+    margin-bottom: 10px;
+  }
+  
+  .success-message {
+    background-color: #d4edda;
+    color: #155724;
+    padding: 10px;
+    border-radius: 4px;
+    margin-bottom: 10px;
+  }
+  
+  .contact-form {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .form-group {
+    margin-bottom: 20px;
+  }
+  
+  label {
+    font-weight: bold;
+    display: block;
+    margin-bottom: 5px;
+  }
+  
+  input, .react-select__control {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+  }
+  
+  /* Make the name input box the same size as Select Resident */
+  input#name {
+    width: 96%; /* Make the input box match the width of the react-select */
+  }
+  input#address {
+    width: 96%; /* Make the input box match the width of the react-select */
+  }
+  input#email {
+    width: 96%; /* Make the input box match the width of the react-select */
+  }
+  input#phoneNumber {
+    width: 96%; /* Make the input box match the width of the react-select */
+  }
+  
+  /* Styling for the submit button */
+  button.submit-btn {
+    padding: 12px 20px;
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    width: 100%;
+  }
+  
+  button.submit-btn:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+  }
+  
+  button.submit-btn:hover {
+    background-color: #45a049;
+  }
+  
+  small {
+    font-size: 0.9rem;
+    color: #555;
+    margin-top: 5px;
+  }
+  
+  @media (max-width: 600px) {
+    .contact-form-container {
+      padding: 15px;
+    }
+  
+    input, .react-select__control, button.submit-btn {
+      padding: 10px;
+    }
+  
+    /* Adjusting for smaller screen */
+    input#name {
+      width: 100%; /* Full width on smaller screens */
+    }
+
+    input#phonenumber {
+        width: 100%; /* Full width on smaller screens */
+      }
+
+    input#email {
+        width: 100%; /* Full width on smaller screens */
+      }
+
+    input#address {
+        width: 100%; /* Full width on smaller screens */
+      }
+  }
+  
