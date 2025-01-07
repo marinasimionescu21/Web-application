@@ -1,0 +1,160 @@
+.visit-management-container {
+  max-width: 600px;
+  margin: auto;
+  padding: 20px;
+  text-align: center;
+  font-family: 'Arial', sans-serif;
+  background: linear-gradient(135deg, #f9f9f9, #eef3f7);
+  border-radius: 12px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+}
+
+.title {
+  background-color: #4CAF50; /* Green bar for the title */
+  color: white;
+  padding: 15px 20px;
+  border-radius: 8px;
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  text-align: center;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.description {
+  margin: 10px 0 20px;
+  color: #555;
+  font-size: 1.1rem;
+}
+
+.buttons-container {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.primary-button {
+  padding: 12px 20px;
+  font-size: 16px;
+  border: none;
+  border-radius: 8px;
+  color: white;
+  cursor: pointer;
+  transition: transform 0.3s, background-color 0.3s;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.add-button {
+  background-color: #4CAF50; /* Green for Add Visit */
+}
+
+.view-all-button {
+  background-color: #007BFF; /* Blue for View All Visits */
+  color: white;
+}
+
+.primary-button:hover {
+  transform: scale(1.05);
+  opacity: 0.9;
+}
+
+.primary-button:active {
+  transform: scale(0.95);
+}
+
+.form-field {
+  text-align: left;
+  margin-bottom: 20px;
+}
+
+label {
+  font-weight: bold;
+  font-size: 1rem;
+  color: #444;
+}
+
+.tooltip {
+  font-size: 0.85rem;
+  color: #666;
+  margin-left: 10px;
+  font-style: italic;
+}
+
+input {
+  width: 100%;
+  padding: 12px;
+  margin-top: 5px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: box-shadow 0.2s;
+}
+
+input:focus {
+  border-color: #4CAF50;
+  box-shadow: 0 0 5px #4CAF50;
+}
+
+.submit-button {
+  background-color: #4CAF50; /* Green for Submit */
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: transform 0.3s, background-color 0.3s;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.submit-button:hover {
+  transform: scale(1.05);
+  background-color: #45a049; /* Darker green on hover */
+}
+
+.submit-button:disabled {
+  background-color: #6c757d;
+}
+
+.error-message {
+  color: #721c24;
+  background-color: #f8d7da;
+  padding: 10px;
+  margin-bottom: 15px;
+  border-radius: 8px;
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+
+.success-message {
+  color: #155724;
+  background-color: #d4edda;
+  padding: 10px;
+  margin-bottom: 15px;
+  border-radius: 8px;
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+
+.add-visit-form {
+  background: #ffffff;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease-in-out;
+}
+
+.add-visit-form:hover {
+  transform: scale(1.02);
+}
+
+.view-all-button {
+  background-color: #007BFF; /* Blue for View All Visits */
+  color: black; /* Updated to black text */
+}
+
+.view-all-button:hover {
+  background-color: #0056b3; /* Darker blue on hover */
+  color: black; /* Ensure text remains black on hover */
+}

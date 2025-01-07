@@ -1,123 +1,159 @@
-/* src/App.css */
-.contact-form-container {
-    font-family: Arial, sans-serif;
-    max-width: 600px;
-    margin: 20px auto;
-    padding: 20px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    background-color: #f9f9f9;
-  }
-  
-  h2 {
-    text-align: center;
-    color: #333;
-  }
-  
-  .error-message {
-    background-color: #f8d7da;
-    color: #721c24;
-    padding: 10px;
-    border-radius: 4px;
-    margin-bottom: 10px;
-  }
-  
-  .success-message {
-    background-color: #d4edda;
-    color: #155724;
-    padding: 10px;
-    border-radius: 4px;
-    margin-bottom: 10px;
-  }
-  
-  .contact-form {
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .form-group {
-    margin-bottom: 20px;
-  }
-  
-  label {
-    font-weight: bold;
-    display: block;
-    margin-bottom: 5px;
-  }
-  
-  input, .react-select__control {
+/* General Page Styling */
+.contact-person-page {
+  text-align: center;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+  background-color: #f9f9f9;
+}
+
+/* Title Section with Colorful Band */
+.contact-person-page h1 {
+  background: linear-gradient(45deg, #4CAF50, #2196F3, #FF9800); /* Gradient with multiple colors */
+  color: white;
+  font-size: 28px;
+  margin: 0;
+  padding: 20px 0;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  display: inline-block;
+  width: 100%;
+}
+
+.contact-person-page p {
+  color: #666;
+  font-size: 16px;
+  margin: 20px 0 30px;
+}
+
+/* Dropdown Container */
+.dropdown-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.resident-dropdown {
+  width: 300px;
+}
+
+.search-button {
+  padding: 10px 20px;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+}
+
+.search-button:hover {
+  background-color: #45a049;
+}
+
+.search-button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+/* Add Contact Person Button */
+.add-contact-container {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.add-contact-button {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #007bff; /* Blue */
+  color: white;
+  text-decoration: none;
+  border-radius: 5px;
+  font-weight: bold;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.add-contact-button:hover {
+  background-color: #0056b3; /* Darker blue */
+  transform: translateY(-2px);
+}
+
+/* Search Results Styling */
+.search-results {
+  margin-top: 20px;
+  text-align: left;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+  background-color: #ffffff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.search-results ul {
+  list-style: none;
+  padding: 0;
+}
+
+.search-results li {
+  margin-bottom: 15px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #ddd;
+}
+
+.search-results li:last-child {
+  border-bottom: none;
+}
+
+.search-results strong {
+  color: #333;
+}
+
+.search-results p {
+  margin: 0;
+  color: #666;
+  text-align: center;
+}
+
+/* Error and Success Messages */
+.error-message {
+  color: #d9534f;
+  background-color: #f2dede;
+  padding: 10px;
+  border: 1px solid #ebccd1;
+  border-radius: 5px;
+  margin-bottom: 20px;
+}
+
+.success-message {
+  color: #3c763d;
+  background-color: #dff0d8;
+  padding: 10px;
+  border: 1px solid #d6e9c6;
+  border-radius: 5px;
+  margin-bottom: 20px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .resident-dropdown {
     width: 100%;
-    padding: 12px;
-    margin-bottom: 10px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
   }
-  
-  /* Make the name input box the same size as Select Resident */
-  input#name {
-    width: 96%; /* Make the input box match the width of the react-select */
-  }
-  input#address {
-    width: 96%; /* Make the input box match the width of the react-select */
-  }
-  input#email {
-    width: 96%; /* Make the input box match the width of the react-select */
-  }
-  input#phoneNumber {
-    width: 96%; /* Make the input box match the width of the react-select */
-  }
-  
-  /* Styling for the submit button */
-  button.submit-btn {
-    padding: 12px 20px;
-    background-color: #4caf50;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 16px;
-    width: 100%;
-  }
-  
-  button.submit-btn:disabled {
-    background-color: #ccc;
-    cursor: not-allowed;
-  }
-  
-  button.submit-btn:hover {
-    background-color: #45a049;
-  }
-  
-  small {
-    font-size: 0.9rem;
-    color: #555;
-    margin-top: 5px;
-  }
-  
-  @media (max-width: 600px) {
-    .contact-form-container {
-      padding: 15px;
-    }
-  
-    input, .react-select__control, button.submit-btn {
-      padding: 10px;
-    }
-  
-    /* Adjusting for smaller screen */
-    input#name {
-      width: 100%; /* Full width on smaller screens */
-    }
 
-    input#phonenumber {
-        width: 100%; /* Full width on smaller screens */
-      }
-
-    input#email {
-        width: 100%; /* Full width on smaller screens */
-      }
-
-    input#address {
-        width: 100%; /* Full width on smaller screens */
-      }
+  .search-results {
+    padding: 15px;
   }
-  
+
+  .contact-person-page h1 {
+    font-size: 24px;
+  }
+
+  .search-button, .add-contact-button {
+    font-size: 14px;
+    padding: 8px 16px;
+  }
+}

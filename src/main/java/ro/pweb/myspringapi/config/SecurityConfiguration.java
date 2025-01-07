@@ -35,6 +35,8 @@ public class SecurityConfiguration {
                 .requestMatchers("/api/v1/rooms/**").permitAll()
                 .requestMatchers("/api/v1/careplans/**").permitAll()
                 .requestMatchers("/api/v1/contact-persons/**").permitAll()
+                .requestMatchers("/api/v1/medical-alerts/**").permitAll()
+                .requestMatchers("/api/v1/visits/**").permitAll()
                 .anyRequest().authenticated() // Any other request requires authentication
                 .and()
                 .sessionManagement()

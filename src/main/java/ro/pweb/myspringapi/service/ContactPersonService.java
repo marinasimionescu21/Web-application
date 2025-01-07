@@ -33,6 +33,11 @@ public class ContactPersonService {
         return contactPersonRepository.findByResidentCnp(residentCnp);
     }
 
+//    public List<ContactPerson> searchContactPersonsByResidentName(String name) {
+//        // Example query: adjust based on your data access logic
+//        return contactPersonRepository.findByResidentNameContainingIgnoreCase(name);
+//    }
+
     // Get a specific contact person by ID
     public ContactPerson getContactPersonById(Long id) throws Exception {
         return contactPersonRepository.findById(id)

@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { FaHome, FaSignOutAlt, FaBars, FaArrowLeft, FaUserFriends, FaBriefcase, FaBuilding, FaPager } from 'react-icons/fa';
+import { AiFillAlert } from "react-icons/ai";
+import { BiSolidContact, BiCalendar  } from "react-icons/bi";
 
 export default function Navbar() {
   const auth = localStorage.getItem("token");
@@ -54,7 +56,13 @@ export default function Navbar() {
               <FaPager /> Care Plans
             </CustomLink>
             <CustomLink to="/contactperson">
-              <FaUserFriends /> Contact Person
+              <BiSolidContact /> Contact Person
+            </CustomLink>
+            <CustomLink to="/medical-alert">
+              <AiFillAlert /> Medical Alert
+            </CustomLink>
+            <CustomLink to="/visits-management">
+              <BiCalendar /> Visits
             </CustomLink>
           </ul>
           <div style={styles.logoutWrapper}>
@@ -92,10 +100,10 @@ const styles = {
   },
   burgerMenu: {
     fontSize: "2rem",
-    color: "#fff",
-    backgroundColor: "transparent",
-    border: "none",
+    color: "black", // White icon color
+    backgroundColor: "transparent", // No background color
     cursor: "pointer",
+    padding: "10px", // Add padding for better click area
   },
   sidebarClosed: {
     display: "none",
@@ -114,12 +122,12 @@ const styles = {
     zIndex: 1000,
   },
   backButton: {
-    color: "#fff",
+    color: "white", // White icon color
     fontSize: "1.5rem",
-    backgroundColor: "transparent",
-    border: "none",
+    backgroundColor: "transparent", // No background color
     cursor: "pointer",
     marginBottom: "1rem",
+    padding: "10px", // Add padding for better click area
   },
   menu: {
     listStyleType: "none", // Removes bullet points
@@ -151,7 +159,7 @@ const styles = {
     alignItems: "center",
     color: "#fff",
     fontSize: "1.5rem",
-    backgroundColor: "transparent",
+    backgroundColor: "transparent", // No background color
     border: "none",
     cursor: "pointer",
   },

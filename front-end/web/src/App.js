@@ -19,7 +19,12 @@ import Employee from './components/Employee';
 import Resident from './components/Resident';
 import Room from './components/Rooms';
 import CarePlanForm from './components/CarePlan';
-import AddContactPerson from './components/ContactPerson';
+import ContactPerson from './components/ContactPerson';
+import AddContactPerson from './components/AddContactPersonForm';
+import MedicalAlertPage from './components/MedicalAlert';
+import AddMedicalAlert from './components/AddMedicalAlert';
+import Visits from './components/Visits';
+import VisitManagement from './components/VisitManagement';
 
 function App() {
   
@@ -43,7 +48,12 @@ function App() {
           <Route exact path='/employee' element={<Employee/>}> </Route>
           <Route exact path='/room' element={<Room/>}> </Route>
           <Route exact path='/careplan' element={<CarePlanForm/>}> </Route>
-          <Route exact path='/contactperson' element={<AddContactPerson/>}> </Route>
+          <Route exact path='/contactperson' element={<ContactPerson/>}> </Route>
+          <Route exact path='/add-contact-person' element={<AddContactPerson/>}> </Route>
+          <Route exact path='/medical-alert' element={<MedicalAlertPage/>}> </Route>
+          <Route exact path='/add-medical-alert' element={<AddMedicalAlert/>}> </Route>
+          <Route exact path='/visits' element={<Visits/>}> </Route>
+          <Route exact path='/visits-management' element={<VisitManagement/>}> </Route>
           <Route exact path='/logout' element={<Logout/>}> </Route>
         </Routes>
     </Router>
